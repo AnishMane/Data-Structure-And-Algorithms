@@ -3,18 +3,55 @@
 
 using namespace std;
 
-struct Node{
+struct node{
     int data;
-    Node* next;
+    node* next;
 };
 
-Node* createNode(int data)
+node* createANode(int data)
 {
-    Node* newNode = (Node*)malloc(sizeof(Node));
+    node * newNode = (node*)malloc(sizeof(node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+node* insertAtEnd(node* root, int data)
+{
+    node* current = (node*)malloc(sizeof(node));
+    current = root;
+    if(root == NULL)
+    {
+        return createANode(data);
+    }
+    node* newNode = (node*)malloc(sizeof(node));
+    newNode = createANode(data);
+    while(current->next != NULL)
+    {
+        current = current->next;
+    }
+    current->next = newNode;
+    return root;
 
 }
 
-int main()
+void printLinkedList(node* root)
 {
+    while(root != NULL)
+    {
+        cout << root->data << " ";
+        root = root->next;
+    }
+}
 
+int main(){
+    node* root = NULL;
+
+    root = insertAtEnd(root,1);
+    root = insertAtEnd(root,2);
+    root = insertAtEnd(root,3);
+    root = insertAtEnd(root,4);
+    root = insertAtEnd(root,5);
+
+    printLinkedList(root);
 }

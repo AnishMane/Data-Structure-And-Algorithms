@@ -60,6 +60,62 @@ node* insertAtEnd(node* head, int data)
     return newNode;
 }
 
+node* deleteFromBeginning(node** head)
+{
+    node* temp = *head;
+    *head = (*head)->next;
+    delete temp;
+
+    return *head;
+}
+
+node* deleteFromMiddle(node** head, int position)
+{
+    node* current = *head;
+    node* prev = *head;
+
+    for(int i=0; i<position; i++)
+    {
+        if(i==0 && position == 1)
+        {
+            *head = (*head)->next;
+            free(current);
+        }
+        else{
+            if(i == position -1 && current != NULL)
+            {
+                prev->next = current->next;
+                free(current);
+            }
+            else{
+                prev = current;
+                if(prev == NULL)
+                {
+                    break;
+                }
+                current = current->next;
+            }
+        }
+    }
+}
+
+node* deleteFromEnd(node** head)
+{
+    node* current = *head;
+    node* prev = NULL;
+
+    while(current->next != NULL)
+    {
+        prev = current;
+        current = current->next;
+    }
+    prev->next = NULL;
+    delete current;
+
+    return *head;
+}
+
+
 void printLinkedList(node* head)
 {
     while(head !=NULL)
@@ -81,6 +137,12 @@ int main(){
 
         insertAtEnd(head, 5);
         insertAtEnd(head, 6);
+
+        deleteFromBeginning(&head);
+
+        deleteFromMiddle(&head, 3);
+
+        deleteFromEnd(&head);
 
         printLinkedList(head);
 

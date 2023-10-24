@@ -8,50 +8,81 @@ struct node{
     node* next;
 };
 
-node* createANode(int data)
+node* insertAtBeginning(node* head, int data)
 {
-    node * newNode = (node*)malloc(sizeof(node));
+    node* newNode = new node();
+
     newNode->data = data;
-    newNode->next = NULL;
+
+    newNode->next = head;
+    
+    head = newNode;
     return newNode;
 }
 
-node* insertAtEnd(node* root, int data)
+node* insertInTheMiddle(node* prev_node, int data)
 {
-    node* current = (node*)malloc(sizeof(node));
-    current = root;
-    if(root == NULL)
+    if(prev_node == NULL)
     {
-        return createANode(data);
+        cout << "Previous Node Cannot be NULL" << endl;
     }
-    node* newNode = (node*)malloc(sizeof(node));
-    newNode = createANode(data);
+
+    node* newNode = new node();
+
+    newNode->data = data;
+
+    newNode->next = prev_node->next;
+
+    prev_node->next = newNode;
+    return newNode;
+}
+
+node* insertAtEnd(node* head, int data)
+{
+    node* newNode = new node();
+
+    node* current  = head;
+
+    newNode->data = data;
+
+    if(head == NULL)
+    {
+        head = newNode;
+    }
     while(current->next != NULL)
     {
         current = current->next;
     }
-    current->next = newNode;
-    return root;
 
+    current->next = newNode;
+    newNode->next = NULL;
+
+    return newNode;
 }
 
-void printLinkedList(node* root)
+void printLinkedList(node* head)
 {
-    while(root != NULL)
+    while(head !=NULL)
     {
-        cout << root->data << " ";
-        root = root->next;
+        cout << head->data << " -> ";
+        head = head->next;
     }
+    cout << "NULL" << endl;
 }
 
 int main(){
-    node* root = NULL;
+        node* head = NULL;
+        head = insertAtBeginning(head, 4);
+        head = insertAtBeginning(head, 2);
+        head = insertAtBeginning(head, 1);
 
-    root = insertAtEnd(root,1);
-    root = insertAtEnd(root,2);
-    root = insertAtEnd(root,3);
-    root = insertAtEnd(root,4);
-    root = insertAtEnd(root,5);
+        node* secondNode = head->next;
+        insertInTheMiddle(secondNode, 3);
 
-    printLinkedList(root);
+        insertAtEnd(head, 5);
+        insertAtEnd(head, 6);
+
+        printLinkedList(head);
+
+        
 }
